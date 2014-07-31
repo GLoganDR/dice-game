@@ -12,19 +12,20 @@ app.use(morgan('dev'));
 app.use(express.static(__dirname + '/static'));
 
 app.get('/', function(req, res){
-  res.render('dice');
+  res.render('home');
 });
 
-app.get('/rolldice/:roll', function(req, res){
-  var roll = req.params.roll * 1;
-  var row = Math.ceil(roll / 10);
+app.get('/rolldice/:num', function(req, res){
+  var num = req.params.num * 1;
   var rolls = [];
+  var sum = 0;
 
-  for(var i = 0; i < roll; i++){
-    rolls.push(Math.floor(Math.random() * 6) + 1);
+  for(var i = 0; i < num; i++){
+    var roll = Math.floor(Math.random() * 6) +1;
+    rolls.push(roll);
+    sum += roll;
   }
-  var sum = rolls.reduce(function(a,b){return a + b;});
-    res.render('rolldice', {rolls:rolls,row:row,sum:sum});
+    ret.render('dice', {rolls:rolls, sum:sum});
 });
 
 var port = process.env.PORT;
